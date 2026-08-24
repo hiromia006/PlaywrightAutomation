@@ -6,10 +6,13 @@ with sync_playwright() as p1:
     browser = p1.firefox.launch(headless=False)
     page = browser.new_page()
     page.goto("https://www.tutorialspoint.com/selenium/practice/selenium_automation_practice.php")
+    page.wait_for_load_state("networkidle", timeout=50)
+    page.locator("#name").wait_for(state="enabled", timeout=50)
     page.locator("#name").fill("Naima")
 
     page.locator("//input[@id='gender']").click()
 
+    page.locator("#hobbies").wait_for(state="clickable", timeout=50)
     page.locator("#hobbies").click()
     page.locator("#dob").fill("2010-10-10")
     sleep(2)
